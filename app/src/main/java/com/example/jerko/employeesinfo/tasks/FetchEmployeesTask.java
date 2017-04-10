@@ -107,12 +107,13 @@ public class FetchEmployeesTask extends AsyncTask<String, Void, JSONObject> {
 
                 ObjectMapper mapper = new ObjectMapper();
                 Iterator<?> keys = jsonObject.keys();
-                Employee headerEmployee = new Employee();
+
 
                 while( keys.hasNext() ) {
                     String key = (String)keys.next();
                     Log.d("header", key);
 
+                    Employee headerEmployee = new Employee();
                     headerEmployee.setName(key);
                     headerEmployee.setRole("_header_");
                     employees.add(headerEmployee);
@@ -122,7 +123,7 @@ public class FetchEmployeesTask extends AsyncTask<String, Void, JSONObject> {
 
                 }
                 ((MainActivity)activity).logEmployees(employees);
-
+                ((MainActivity)activity).fillInList(employees);
 
             } catch (IOException e) {
                 e.printStackTrace();
