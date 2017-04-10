@@ -122,8 +122,8 @@ public class FetchEmployeesTask extends AsyncTask<String, Void, JSONObject> {
                     employees.addAll((new ArrayList<>(Arrays.asList(sectionEmployees))));
 
                 }
-                ((MainActivity)activity).logEmployees(employees);
-                ((MainActivity)activity).fillInList(employees);
+
+                ((MainActivity)activity).fillInList(setDepartmentValue(employees));
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -153,5 +153,14 @@ public class FetchEmployeesTask extends AsyncTask<String, Void, JSONObject> {
             e.printStackTrace();
         }
 
+    }
+
+    private List<Employee> setDepartmentValue(List<Employee> employees){
+        String currentDepartment = "";
+        for (int i = 0; i < employees.size(); i++){
+            if (employees.get(i).getRole().equals("_header_")) currentDepartment = employees.get(i).getName();
+            else employees.get(i).setDepartment(currentDepartment);
+        }
+        return employees;
     }
 }

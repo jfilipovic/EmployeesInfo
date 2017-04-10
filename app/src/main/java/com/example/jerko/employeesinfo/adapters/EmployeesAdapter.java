@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.example.jerko.employeesinfo.R;
 import com.example.jerko.employeesinfo.models.Employee;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,10 +26,12 @@ public class EmployeesAdapter extends BaseAdapter {
 
     private List<Employee> mData = new ArrayList<>();
     private LayoutInflater mInflater;
+    private Context context;
 
     public EmployeesAdapter(Context context, List<Employee> mData) {
         mInflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.context = context;
         this.mData = mData;
     }
 
@@ -83,7 +86,7 @@ public class EmployeesAdapter extends BaseAdapter {
         switch (rowType){
             case TYPE_EMPLOYEE:
                 holder.textView.setText(mData.get(position).getName() + " " + mData.get(position).getSurname());
-                //todo set photo
+                Picasso.with(context).load("https://nielsmouthaan.nl/backbase/photos/" + mData.get(position).getPhoto() ).into(holder.imageView);
                 break;
             case TYPE_HEADER:
                 holder.textView.setText(mData.get(position).getName());
