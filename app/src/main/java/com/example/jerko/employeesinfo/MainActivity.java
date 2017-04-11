@@ -1,16 +1,16 @@
 package com.example.jerko.employeesinfo;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
-import android.widget.ListView;
+import android.widget.Toast;
 
-import com.example.jerko.employeesinfo.adapters.EmployeesAdapter;
 import com.example.jerko.employeesinfo.fragments.DetailsFragment;
 import com.example.jerko.employeesinfo.fragments.ListFragment;
 import com.example.jerko.employeesinfo.models.Employee;
@@ -31,14 +31,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         initToolBar();
+        setFragment("list");
+        if (isNetworkAvailable(this)) {
+            new FetchEmployeesTask(this).execute();
+        } else {
+            Toast.makeText(this, "NO INTERNET CONNECTION", Toast.LENGTH_LONG).show();
+        }
+
 
     }
 
-    @Override
-    protected void onResume(){
-        super.onResume();
-        new FetchEmployeesTask(this).execute();
-    }
 
     public void fillInList(List<Employee> employees){
         this.employeeList = employees;
@@ -100,4 +102,16 @@ public class MainActivity extends AppCompatActivity {
 
         setToolbarIcon();
     }
+
+    @Override
+    public void onBackPressed() {
+        if (frag instanceof DetailsFragment) setFragment("list");
+        else super.onBackPressed();
+    }
+
+    public boolean isNetworkAvailable(final Context context) {
+        final ConnectivityManager connectivityManager = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE));
+        return connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
+    }
+
 }

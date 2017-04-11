@@ -48,7 +48,8 @@ public class EmployeesAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return mData.size();
+        if (mData != null)return mData.size();
+        else return 0;
     }
 
     @Override
