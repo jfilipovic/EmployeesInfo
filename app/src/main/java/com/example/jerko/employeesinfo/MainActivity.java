@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         if (isNetworkAvailable(this)) {
             new FetchEmployeesTask(this).execute();
         } else {
-            Toast.makeText(this, "NO INTERNET CONNECTION", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "NO INTERNET CONNECTION! Swipe to refresh!", Toast.LENGTH_LONG).show();
         }
 
 

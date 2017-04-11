@@ -59,7 +59,7 @@ public class ListFragment extends Fragment {
                 if (((MainActivity)getActivity()).isNetworkAvailable(getActivity())) {
                     new FetchEmployeesTask(getActivity()).execute();
                 } else {
-                    Toast.makeText(getActivity(), "NO INTERNET CONNECTION", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "NO INTERNET CONNECTION! Swipe to refresh!" , Toast.LENGTH_LONG).show();
                     swipeContainer.setRefreshing(false);
                 }
             }
